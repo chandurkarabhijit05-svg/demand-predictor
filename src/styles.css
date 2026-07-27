@@ -4,6 +4,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-surface: var(--surface);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-high: var(--high);
+  --color-medium: var(--medium);
+  --color-low: var(--low);
+  --shadow-card: 0 8px 24px -12px oklch(0.2 0.03 60 / 0.25);
+  --shadow-float: 0 18px 40px -18px oklch(0.2 0.03 60 / 0.45);
+}
+
+
 /*
  * Design system definition.
  *
