@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      predictions: {
+        Row: {
+          category: string
+          created_at: string
+          current_stock: number
+          horizon_days: number
+          id: string
+          predicted_quantity: number
+          product_name: string
+          recommended_stock: number
+          trend: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          current_stock?: number
+          horizon_days?: number
+          id?: string
+          predicted_quantity?: number
+          product_name: string
+          recommended_stock?: number
+          trend?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          current_stock?: number
+          horizon_days?: number
+          id?: string
+          predicted_quantity?: number
+          product_name?: string
+          recommended_stock?: number
+          trend?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          store_name: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          store_name?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          store_name?: string
+        }
+        Relationships: []
+      }
+      sales_data: {
+        Row: {
+          category: string
+          created_at: string
+          date: string
+          id: string
+          product_name: string
+          quantity: number
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          date: string
+          id?: string
+          product_name: string
+          quantity?: number
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          date?: string
+          id?: string
+          product_name?: string
+          quantity?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
