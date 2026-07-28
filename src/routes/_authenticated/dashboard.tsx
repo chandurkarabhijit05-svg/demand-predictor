@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { generatePredictions } from "@/lib/predictions.functions";
-import { CATEGORIES, parseSalesCsv, trendLabel, type PredictionRow } from "@/lib/demand";
+import { categoryIcon, parseSalesCsv, trendLabel, type PredictionRow } from "@/lib/demand";
 import { ProductCard } from "@/components/demand/product-card";
 import { DemandChart, type ChartPoint } from "@/components/demand/demand-chart";
 import { Button } from "@/components/ui/button";
@@ -117,9 +117,21 @@ function Dashboard() {
     return points;
   }, [data]);
 
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of data?.predictions ?? []) set.add(p.category || "General");
+    for (const s of data?.sales ?? []) set.add(s.category || "General");
+    return ["All", ...[...set].sort()];
+  }, [data]);
+
+  useEffect(() => {
+    if (!categories.includes(category)) setCategory("All");
+  }, [categories, category]);
+
   const visible = useMemo(() => {
     let list = data?.predictions ?? [];
-    if (category !== "All") list = list.filter((p) => p.category === category);
+    if (category !== "All")
+      list = list.filter((p) => (p.category || "General") === category);
     if (search.trim())
       list = list.filter((p) =>
         p.product_name.toLowerCase().includes(search.trim().toLowerCase()),
@@ -131,6 +143,23 @@ function Dashboard() {
       list = [...list].sort((a, b) => b.predicted_quantity - a.predicted_quantity).slice(0, 6);
     return list;
   }, [data, category, search, filter]);
+
+  const filterCounts = useMemo(() => {
+    let base = data?.predictions ?? [];
+    if (category !== "All") base = base.filter((p) => (p.category || "General") === category);
+    if (search.trim())
+      base = base.filter((p) =>
+        p.product_name.toLowerCase().includes(search.trim().toLowerCase()),
+      );
+    return {
+      All: base.length,
+      "High Demand": base.filter((p) => trendLabel(p.trend) === "high").length,
+      "Low Stock": base.filter((p) => p.predicted_quantity > p.current_stock).length,
+      Trending: Math.min(base.length, 6),
+    } as Record<Filter, number>;
+  }, [data, category, search]);
+
+
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -249,18 +278,18 @@ function Dashboard() {
       <main className="mx-auto max-w-5xl px-5">
         <section className="-mt-6" aria-label="Categories">
           <div className="no-scrollbar flex gap-3 overflow-x-auto pb-1">
-            {CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <button
-                key={c.name}
-                onClick={() => setCategory(c.name)}
+                key={c}
+                onClick={() => setCategory(c)}
                 className={`flex shrink-0 items-center gap-2 rounded-2xl border px-4 py-3 text-sm font-semibold shadow-card transition-all ${
-                  category === c.name
+                  category === c
                     ? "border-brand bg-brand text-brand-foreground"
                     : "border-border bg-card text-card-foreground hover:-translate-y-0.5"
                 }`}
               >
-                <span aria-hidden>{c.icon}</span>
-                {c.name}
+                <span aria-hidden>{categoryIcon(c)}</span>
+                {c}
               </button>
             ))}
           </div>
@@ -278,9 +307,11 @@ function Dashboard() {
               }`}
             >
               {f}
+              <span className="ml-1.5 opacity-70">{filterCounts[f]}</span>
             </button>
           ))}
         </section>
+
 
         {alerts.length > 0 && (
           <section className="mt-5 rounded-3xl border border-high/30 bg-high/8 p-4">

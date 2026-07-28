@@ -18,16 +18,21 @@ export interface SaleRow {
   quantity: number;
 }
 
-export const CATEGORIES = [
-  { name: "All", icon: "🗂️" },
-  { name: "Grocery", icon: "🛒" },
-  { name: "Electronics", icon: "🔌" },
-  { name: "Clothing", icon: "👕" },
-  { name: "Beverages", icon: "🥤" },
-  { name: "Home", icon: "🏠" },
-  { name: "Beauty", icon: "💄" },
-  { name: "General", icon: "📦" },
-];
+export const CATEGORY_ICONS: Record<string, string> = {
+  All: "🗂️",
+  Grocery: "🛒",
+  Electronics: "🔌",
+  Clothing: "👕",
+  Beverages: "🥤",
+  Home: "🏠",
+  Beauty: "💄",
+  General: "📦",
+};
+
+export function categoryIcon(name: string) {
+  return CATEGORY_ICONS[name] ?? "🏷️";
+}
+
 
 export function trendLabel(trend: string): DemandTrend {
   return trend === "high" || trend === "low" ? trend : "medium";
