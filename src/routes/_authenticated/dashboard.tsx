@@ -262,18 +262,18 @@ function Dashboard() {
       <main className="mx-auto max-w-5xl px-5">
         <section className="-mt-6" aria-label="Categories">
           <div className="no-scrollbar flex gap-3 overflow-x-auto pb-1">
-            {CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <button
-                key={c.name}
-                onClick={() => setCategory(c.name)}
+                key={c}
+                onClick={() => setCategory(c)}
                 className={`flex shrink-0 items-center gap-2 rounded-2xl border px-4 py-3 text-sm font-semibold shadow-card transition-all ${
-                  category === c.name
+                  category === c
                     ? "border-brand bg-brand text-brand-foreground"
                     : "border-border bg-card text-card-foreground hover:-translate-y-0.5"
                 }`}
               >
-                <span aria-hidden>{c.icon}</span>
-                {c.name}
+                <span aria-hidden>{categoryIcon(c)}</span>
+                {c}
               </button>
             ))}
           </div>
@@ -291,9 +291,11 @@ function Dashboard() {
               }`}
             >
               {f}
+              <span className="ml-1.5 opacity-70">{filterCounts[f]}</span>
             </button>
           ))}
         </section>
+
 
         {alerts.length > 0 && (
           <section className="mt-5 rounded-3xl border border-high/30 bg-high/8 p-4">
