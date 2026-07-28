@@ -117,9 +117,21 @@ function Dashboard() {
     return points;
   }, [data]);
 
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of data?.predictions ?? []) set.add(p.category || "General");
+    for (const s of data?.sales ?? []) set.add(s.category || "General");
+    return ["All", ...[...set].sort()];
+  }, [data]);
+
+  useEffect(() => {
+    if (!categories.includes(category)) setCategory("All");
+  }, [categories, category]);
+
   const visible = useMemo(() => {
     let list = data?.predictions ?? [];
-    if (category !== "All") list = list.filter((p) => p.category === category);
+    if (category !== "All")
+      list = list.filter((p) => (p.category || "General") === category);
     if (search.trim())
       list = list.filter((p) =>
         p.product_name.toLowerCase().includes(search.trim().toLowerCase()),
@@ -131,6 +143,7 @@ function Dashboard() {
       list = [...list].sort((a, b) => b.predicted_quantity - a.predicted_quantity).slice(0, 6);
     return list;
   }, [data, category, search, filter]);
+
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
