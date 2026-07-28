@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { generatePredictions } from "@/lib/predictions.functions";
-import { CATEGORIES, parseSalesCsv, trendLabel, type PredictionRow } from "@/lib/demand";
+import { categoryIcon, parseSalesCsv, trendLabel, type PredictionRow } from "@/lib/demand";
 import { ProductCard } from "@/components/demand/product-card";
 import { DemandChart, type ChartPoint } from "@/components/demand/demand-chart";
 import { Button } from "@/components/ui/button";
