@@ -144,6 +144,22 @@ function Dashboard() {
     return list;
   }, [data, category, search, filter]);
 
+  const filterCounts = useMemo(() => {
+    let base = data?.predictions ?? [];
+    if (category !== "All") base = base.filter((p) => (p.category || "General") === category);
+    if (search.trim())
+      base = base.filter((p) =>
+        p.product_name.toLowerCase().includes(search.trim().toLowerCase()),
+      );
+    return {
+      All: base.length,
+      "High Demand": base.filter((p) => trendLabel(p.trend) === "high").length,
+      "Low Stock": base.filter((p) => p.predicted_quantity > p.current_stock).length,
+      Trending: Math.min(base.length, 6),
+    } as Record<Filter, number>;
+  }, [data, category, search]);
+
+
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
