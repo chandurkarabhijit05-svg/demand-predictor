@@ -97,7 +97,7 @@ export function AssistantPanel({ forecasts }: { forecasts: ProductForecast[] }) 
             ) : (
               <div
                 key={i}
-                className="prose prose-sm max-w-none text-sm text-foreground prose-headings:text-foreground prose-strong:text-foreground dark:prose-invert"
+                className="md-body max-w-none text-foreground"
               >
                 <ReactMarkdown>{m.content}</ReactMarkdown>
               </div>
