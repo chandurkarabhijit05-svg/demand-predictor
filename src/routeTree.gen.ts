@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedUploadRouteImport } from './routes/_authenticated/upload'
 import { Route as AuthenticatedPredictionsRouteImport } from './routes/_authenticated/predictions'
+import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -47,6 +48,11 @@ const AuthenticatedPredictionsRoute =
     path: '/predictions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/insights': typeof AuthenticatedInsightsRoute
   '/predictions': typeof AuthenticatedPredictionsRoute
   '/upload': typeof AuthenticatedUploadRoute
 }
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/insights': typeof AuthenticatedInsightsRoute
   '/predictions': typeof AuthenticatedPredictionsRoute
   '/upload': typeof AuthenticatedUploadRoute
 }
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/predictions': typeof AuthenticatedPredictionsRoute
   '/_authenticated/upload': typeof AuthenticatedUploadRoute
 }
@@ -86,10 +95,18 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/dashboard'
+    | '/insights'
     | '/predictions'
     | '/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/sitemap.xml' | '/dashboard' | '/predictions' | '/upload'
+  to:
+    | '/'
+    | '/auth'
+    | '/sitemap.xml'
+    | '/dashboard'
+    | '/insights'
+    | '/predictions'
+    | '/upload'
   id:
     | '__root__'
     | '/'
@@ -97,6 +114,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/_authenticated/dashboard'
+    | '/_authenticated/insights'
     | '/_authenticated/predictions'
     | '/_authenticated/upload'
   fileRoutesById: FileRoutesById
@@ -152,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPredictionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/insights': {
+      id: '/_authenticated/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof AuthenticatedInsightsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -164,12 +189,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedPredictionsRoute: typeof AuthenticatedPredictionsRoute
   AuthenticatedUploadRoute: typeof AuthenticatedUploadRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedPredictionsRoute: AuthenticatedPredictionsRoute,
   AuthenticatedUploadRoute: AuthenticatedUploadRoute,
 }
