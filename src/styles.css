@@ -191,3 +191,49 @@
     color-mix(in oklab, var(--header) 80%, var(--brand)) 100%
   );
 }
+
+@utility glass {
+  background-color: color-mix(in oklab, var(--card) 70%, transparent);
+  border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 20px 45px -30px oklch(0 0 0 / 0.55);
+}
+
+@utility glass-strong {
+  background-color: color-mix(in oklab, var(--card) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+  backdrop-filter: blur(24px) saturate(150%);
+}
+
+@utility aurora {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    z-index: -1;
+    background:
+      radial-gradient(40% 40% at 15% 10%, color-mix(in oklab, var(--brand) 40%, transparent), transparent 70%),
+      radial-gradient(45% 45% at 85% 0%, color-mix(in oklab, var(--chart-2) 35%, transparent), transparent 70%),
+      radial-gradient(40% 40% at 60% 100%, color-mix(in oklab, var(--chart-4) 25%, transparent), transparent 70%);
+    filter: blur(30px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+}
+
+@utility rise-in {
+  animation: rise-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
