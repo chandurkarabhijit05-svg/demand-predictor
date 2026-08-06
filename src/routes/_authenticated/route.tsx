@@ -31,6 +31,7 @@ function AppLayout() {
             <p className="min-w-0 flex-1 truncate text-sm font-semibold">
               {data?.storeName ?? "My Store"}
             </p>
+            <NotificationBell />
             <button
               onClick={toggle}
               aria-label="Toggle dark mode"
