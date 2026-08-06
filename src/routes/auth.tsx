@@ -74,23 +74,29 @@ function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <div className="header-gradient px-6 pb-14 pt-12 text-header-foreground">
-        <Link to="/" className="text-xs font-semibold uppercase tracking-widest opacity-70">
-          DemandIQ
-        </Link>
-        <h1 className="mt-3 text-3xl font-black">
-          {mode === "signin" ? "Welcome back" : "Create your store account"}
-        </h1>
-        <p className="mt-2 text-sm text-header-foreground/70">
-          Forecast demand, plan inventory, stay ahead.
-        </p>
-      </div>
+    <div className="aurora flex min-h-screen items-center justify-center bg-background px-4 py-12">
+      <div className="w-full max-w-md space-y-6">
+        <div className="rise-in flex flex-col items-center text-center">
+          <Link
+            to="/"
+            className="flex items-center gap-2 rounded-full border border-border/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground transition-colors hover:bg-accent"
+          >
+            <span className="grid h-5 w-5 place-items-center rounded-md bg-brand text-brand-foreground">
+              <BarChart3 className="h-3 w-3" />
+            </span>
+            DemandIQ
+          </Link>
+          <h1 className="mt-5 text-3xl font-black">
+            {mode === "signin" ? "Welcome back" : "Create your store account"}
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Forecast demand, plan inventory, stay ahead.
+          </p>
+        </div>
 
-      <div className="mx-auto -mt-8 w-full max-w-md px-6">
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-3xl border border-border bg-card p-6 shadow-float"
+          className="glass rise-in space-y-4 rounded-3xl p-6 shadow-float"
         >
           {mode === "signup" && (
             <div className="space-y-2">
