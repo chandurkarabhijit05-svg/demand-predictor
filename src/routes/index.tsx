@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BarChart3, BellRing, CloudUpload, Sparkles } from "lucide-react";
+import {
+  BarChart3,
+  BellRing,
+  Bot,
+  CloudUpload,
+  LineChart,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
