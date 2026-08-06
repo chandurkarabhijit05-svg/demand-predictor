@@ -5,6 +5,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useTheme } from "@/hooks/use-theme";
 import { useDemandData } from "@/hooks/use-demand-data";
+import { NotificationBell } from "@/components/layout/notification-bell";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -30,6 +31,7 @@ function AppLayout() {
             <p className="min-w-0 flex-1 truncate text-sm font-semibold">
               {data?.storeName ?? "My Store"}
             </p>
+            <NotificationBell />
             <button
               onClick={toggle}
               aria-label="Toggle dark mode"

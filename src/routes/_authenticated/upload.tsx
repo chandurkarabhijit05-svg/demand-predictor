@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { parseSalesCsv } from "@/lib/demand";
 import type { SaleRow } from "@/lib/demand";
 import { Button } from "@/components/ui/button";
+import { DataManager } from "@/components/demand/data-manager";
 
 export const Route = createFileRoute("/_authenticated/upload")({
   head: () => ({
@@ -186,6 +187,8 @@ function UploadPage() {
           </div>
         </section>
       ) : null}
+
+      <DataManager />
     </div>
   );
 }
