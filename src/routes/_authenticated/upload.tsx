@@ -187,6 +187,9 @@ function UploadPage() {
           </div>
         </section>
       ) : null}
+      ) : null}
+
+      <DataManager />
     </div>
   );
 }
